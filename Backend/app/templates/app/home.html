@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3  pt-5">
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                   <li class="nav-item mx-2">
+                        <a href="{% url 'login' %}" class="nav-link" style="color:black">Login</a>
+                   </li>
+                   <li class="nav-item mx-2">
+                        <a href="{% url 'register' %}" class="nav-link" style="color:black">Registration</a>
+                   </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-9 pt-5">
+            <h1> Col 9 </h1>
+        </div>
+    </div>
+</div>
+{% endblock content %}

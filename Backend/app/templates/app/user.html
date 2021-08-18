@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+  <h1>User Page</h1>
+  {% if request.session.name %}
+     <p>{{request.session.name}} <a href="{% url 'logout' %}">Logout</a></p>
+  {% endif %}
+
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            {% for ms in messages %}
+              <p class="alert alert-success">{{ms}}</p>
+            {% endfor %}
+        </div>
+        <div class="col-8">
+            <a class="btn btn-primary" href="{% url 'addata' %}">Add Data</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

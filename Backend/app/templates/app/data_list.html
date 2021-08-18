@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task 1</title>
+    <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container-fluid" style="background-color:black; color: white;">
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <a class="btn btn-success" style="margin:10px;">SignIn</a>
+            <a class="btn btn-warning" style="margin:10px;" href="#">SignUp</a>
+        </div>
+        <div class="col-md-9">
+
+        </div>
+    </div>
+</div>
+<div class="container">
+    {% block content %} {% endblock content %}
+</div>
+</body>
+</html>
