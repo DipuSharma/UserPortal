@@ -13,4 +13,4 @@ class Data(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.sample_rec)
+        return str(self.id)

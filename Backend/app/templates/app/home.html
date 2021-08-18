@@ -1,22 +1,51 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-3  pt-5">
             <div>
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                    <li class="nav-item mx-2">
-                        <a href="{% url 'login' %}" class="nav-link" style="color:black">Login</a>
+                        <a href="{% url 'login' %}" class="btn btn-success nav-link" style="color:black">Login</a>
                    </li>
-                   <li class="nav-item mx-2">
-                        <a href="{% url 'register' %}" class="nav-link" style="color:black">Registration</a>
+                   <li class="nav-item mx-2" style="margin-top:5px;">
+                        <a href="{% url 'register' %}" class="btn btn-primary nav-link" style="color:black">Registration</a>
                    </li>
                 </ul>
             </div>
         </div>
         <div class="col-md-9 pt-5">
-            <h1> Col 9 </h1>
+            <table class="table">
+                <thead style="background-color:Orange">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">User</th>
+                      <th scope="col">Sample Received</th>
+                      <th scope="col">Seq. Last Week</th>
+                      <th scope="col">Sample Pending</th>
+                      <th scope="col">Sample Rejected</th>
+                      <th scope="col">Reason</th>
+                      <th scope="col">Remark</th>
+                      <th scope="col">Time</th>
+                    </tr>
+              </thead>
+              <tbody>
+                  {% for d in data %}
+                            <tr>
+                              <th scope="row">{{d.id}}</th>
+                              <th scope="row">{{d.user}}</th>
+                              <td>{{d.sample_rec}}</td>
+                              <td>{{d.seq_last}}</td>
+                              <td>{{d.sample_pen}}</td>
+                              <td>{{d.sample_rejected}}</td>
+                              <td>{{d.reason}}</td>
+                              <td>{{d.remark}}</td>
+                              <td>{{d.time}}</td>
+                            </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

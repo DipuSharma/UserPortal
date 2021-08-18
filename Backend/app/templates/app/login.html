@@ -15,6 +15,7 @@
     <input type="submit" class="btn btn-primary mt-4" value="Login">
     <div class="text-center text-primary fw-bold" >
      <small>Go For Registration ? <a href="{% url 'register' %}" class="text-success">SignUp Now</a></small>
+     <small><a href="{% url 'home' %}" class="btn text-danger btn-warning">Home Page</a></small>
     </div>
     {% if form.non_field_errors %}
        {% for error in form.non_field_errors %}
