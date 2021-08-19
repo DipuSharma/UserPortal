@@ -29,12 +29,12 @@ class LoginForm(AuthenticationForm):
 class UserDataInsert(forms.ModelForm):
     class Meta:
         model = Data
-        fields = ['sample_rec', 'seq_last', 'sample_pen', 'sample_rejected', 'reason', 'remark']
+        fields = ['Sample_received', 'Sequence_last', 'Sample_pending', 'Sample_rejected', 'Reason', 'Remark']
         widgets = {
-            'sample_rec': forms.TextInput(attrs={'class': 'form-control'}),
-            'seq_last': forms.TextInput(attrs={'class': 'form-control'}),
-            'sample_pen': forms.TextInput(attrs={'class': 'form-control'}),
-            'sample_rejected': forms.TextInput(attrs={'class': 'form-control'}),
-            'reason': forms.TextInput(attrs={'class': 'form-control'}),
-            'remark': forms.TextInput(attrs={'class': 'form-control'}),
+            'Sample_received': forms.TextInput(attrs={'class': 'form-control'}),
+            'Sequence_last': forms.TextInput(attrs={'class': 'form-control'}),
+            'Sample_pending': forms.TextInput(attrs={'class': 'form-control'}),
+            'Sample_rejected': forms.TextInput(attrs={'class': 'form-control'}),
+            'Reason': forms.TextInput(attrs={'class': 'form-control'}),
+            'Remark': forms.TextInput(attrs={'class': 'form-control'}),
         }

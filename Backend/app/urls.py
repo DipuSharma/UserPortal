@@ -12,8 +12,9 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(template_name='app/login.html', authentication_form=LoginForm),
          name='login'),
     path('accounts/profile/', views.ProfileView.as_view(), name='profile'),
+    # path('accounts/profile/', views.add_show, name='profile'),
     path('register', CustomerRegView.as_view(), name="register"),
-    path('addata/', views.add_show, name='addata'),
+    path('update/', views.update, name='update'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
 

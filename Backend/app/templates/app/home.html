@@ -49,4 +49,39 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div class="col-md-12 pt-5">
+            <table class="table">
+                <thead style="background-color:Orange">
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">User</th>
+                      <th scope="col">Sample Received</th>
+                      <th scope="col">Seq. Last Week</th>
+                      <th scope="col">Sample Pending</th>
+                      <th scope="col">Sample Rejected</th>
+                      <th scope="col">Reason</th>
+                      <th scope="col">Remark</th>
+                      <th scope="col">Time</th>
+                    </tr>
+              </thead>
+              <tbody>
+                  {% for n in newdata %}
+                            <tr>
+                              <th scope="row">{{n.latest_date}}</th>
+                              <th scope="row">{{n.user}}</th>
+                              <td>{{n.sample_rec}}</td>
+                              <td>{{n.seq_last}}</td>
+                              <td>{{n.sample_pen}}</td>
+                              <td>{{n.sample_rejected}}</td>
+                              <td>{{n.reason}}</td>
+                              <td>{{n.remark}}</td>
+                              <td>{{n.time}}</td>
+                            </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+        </div>
+</div>
 {% endblock content %}

@@ -30,7 +30,7 @@
      <div class="col-md-8">
          <h1 class="text-center">Data Show</h1>
          <table class="table">
-  <thead style="background-color:Orange">
+  <thead style="background-color:black; color:white">
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Sample Received</th>
@@ -40,6 +40,8 @@
       <th scope="col">Reason</th>
       <th scope="col">Remark</th>
       <th scope="col">Time</th>
+      <th scope="col"></th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -53,6 +55,8 @@
       <td>{{d.reason}}</td>
       <td>{{d.remark}}</td>
       <td>{{d.time}}</td>
+        <td><a class="btn btn-warning" href="#">Edit</a></td>
+        <td><a class="btn btn-danger" href="#">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>
