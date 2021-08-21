@@ -9,21 +9,25 @@ from django.contrib.auth import password_validation
 
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='Password',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+                                widget=forms.PasswordInput(attrs={'class': 'input',
+                                                                  'type': 'password', 'placeholder': 'Enter Password'}))
     password2 = forms.CharField(label='Confirm Password',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+                                widget=forms.PasswordInput(attrs={'class': 'input', 'type': 'password',
+                                                                  'placeholder': 'Enter Confirm Password'}))
 
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
         labels = {'email': 'Email'}
-        widgets = {'username': forms.TextInput(attrs={'class': 'form-control'})}
+        widgets = {'username': forms.TextInput(attrs={'class': 'input', 'type': 'text', 'placeholder': 'Enter UserName'})}
 
 
 class LoginForm(AuthenticationForm):
-    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'}))
+    username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'input',
+                                                           'placeholder': 'Enter UserName'}))
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(
-        attrs={'autocomplete': 'current-password', 'class': 'form-control'}))
+        attrs={'autocomplete': 'current-password', 'class': 'input', 'id': 'myInput',
+               'placeholder': 'Enter Your Password'}))
 
 
 class UserDataInsert(forms.ModelForm):
@@ -31,10 +35,10 @@ class UserDataInsert(forms.ModelForm):
         model = Data
         fields = ['Sample_received', 'Sequence_last', 'Sample_pending', 'Sample_rejected', 'Reason', 'Remark']
         widgets = {
-            'Sample_received': forms.TextInput(attrs={'class': 'form-control'}),
-            'Sequence_last': forms.TextInput(attrs={'class': 'form-control'}),
-            'Sample_pending': forms.TextInput(attrs={'class': 'form-control'}),
-            'Sample_rejected': forms.TextInput(attrs={'class': 'form-control'}),
-            'Reason': forms.TextInput(attrs={'class': 'form-control'}),
-            'Remark': forms.TextInput(attrs={'class': 'form-control'}),
+            'Sample_received': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sample Received'}),
+            'Sequence_last': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sequence Last Week'}),
+            'Sample_pending': forms.TextInput(attrs={'class': 'input'}),
+            'Sample_rejected': forms.TextInput(attrs={'class': 'input'}),
+            'Reason': forms.TextInput(attrs={'class': 'input'}),
+            'Remark': forms.TextInput(attrs={'class': 'input'}),
         }

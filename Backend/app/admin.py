@@ -2,4 +2,13 @@ from django.contrib import admin
 from .models import Data
 
 # Register your models here.
-admin.site.register(Data)
+
+from .models import (
+    Data
+)
+
+
+@admin.register(Data)
+class CustomerModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'Sample_received', 'Sequence_last', 'Sample_pending',
+                    'Sample_rejected', 'Reason', 'Remark', 'Time']

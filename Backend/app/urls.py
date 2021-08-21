@@ -11,10 +11,10 @@ urlpatterns = [
     path('', HomeView.as_view(), name="home"),
     path('accounts/login/', auth_views.LoginView.as_view(template_name='app/login.html', authentication_form=LoginForm),
          name='login'),
-    path('accounts/profile/', views.ProfileView.as_view(), name='profile'),
-    # path('accounts/profile/', views.add_show, name='profile'),
+    path('accounts/profile/', views.add_show, name='profile'),
     path('register', CustomerRegView.as_view(), name="register"),
-    path('update/', views.update, name='update'),
+    path('delete/<int:id>', views.delete, name="deleted"),
+    path('<int:id>', views.update_data, name="update"),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
 

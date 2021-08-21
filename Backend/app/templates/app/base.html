@@ -3,17 +3,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,  initial-scale= 1">
     <title>Task 1</title>
     <link rel="stylesheet" href="{% static 'app/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'app/css/my.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script language="javascript" src="{% static 'app/js/my.js' %}"></script>
 </head>
 <body>
-<div class="container-fluid" style="bg-color:black">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-9"></div>
+    <nav class="navbar is-fixed-top box-shadow-y">
+      <div class="navbar-brand toggler">
+        <a class="navbar-item has-text-weight-bold has-text-black is-link" href="{% url 'home' %}">
+              <i class="fas fa-home icon" style="margin-top:10px;"></i>Home
+            </a>
+        <a class="navbar-burger nav-toggler"  aria-expanded="false" data-target="#navbarid">
+          <span ></span>
+          <span></span>
+          <span ></span>
+        </a>
+
+      </div>
+        <div id="navbarid" class="navbar-menu">
+          <div class="navbar-start">
+
+          </div>
+
+          <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                 {% if request.user.is_authenticated %}
+                    <a class="navbar-link is-danger is-right" href="{% url 'profile' %}">
+                      <strong>{{user}}</strong>
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="{% url 'logout' %}">Logout</a>
+                    </div>
+                      {% else %}
+                    <a class="navbar-item is-primary" href="{% url 'register' %}">
+                      <strong>Sign Up</strong>
+                    </a>
+                    <a class="navbar-item is-light" href="{% url 'login' %}">
+                      <strong>Sign In</strong>
+                    </a>
+                {% endif %}
+              </div>
+          </div>
+        </div>
+      </nav>
+    <div class="container is-fluid" style="margin-top:80px;">
+{% block content %}
+
+{% endblock content %}
+        </div>
+  <footer>
+    <div class="container is-fluid is-mobile pt-5" style="margin-top:20px;">
+      <div class="columns">
+      <div class="column is-12 has-background-danger has-text-centered">
+          <h4 class="text is-2 is-center"> Copyright | 2021 @ Design & Developed By NIBMG --
+          Employees</h4>
+      </div>
+      </div>
     </div>
-</div>
-    {% block content %} {% endblock content %}
-    {% block main-content %} {% endblock main-content %}
+  </footer>
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 </body>
 </html>

@@ -1,29 +1,43 @@
 {% extends "app/base.html" %}
 {% load static %}
 {% block content %}
-
-<!--Login--> 
-<div class="container py-5">
-    <div class="row my-3">
-  <div class="col-sm-6 offset-sm-3">
-  <h1>Login</h1>
-  <form action="" method="post" novalidate class="shadow p-5">
-         {% csrf_token %}
-    {% for fm in form %}
-        <div class="form-group">{{ fm.label_tag }} {{fm}}<small class="text-danger">{{fm.errors|striptags}}</small><br> </div>
-    {% endfor %}
-    <input type="submit" class="btn btn-primary mt-4" value="Login">
-    <div class="text-center text-primary fw-bold" >
-     <small>Go For Registration ? <a href="{% url 'register' %}" class="text-success">SignUp Now</a></small>
-     <small><a href="{% url 'home' %}" class="btn text-danger btn-warning">Home Page</a></small>
-    </div>
-    {% if form.non_field_errors %}
+<div class="columns is-mobile is-variable is-3">
+    <div class="column is-4"></div>
+    <div class="column is-4 box-shadow-y">
+        <center><h1 class="title is-2 is-center ">Login</h1></center>
+        <form action="" method="post" novalidate class="shadow p-5 " >
+            {% csrf_token %}
+        <div class="field">
+            <label for="" class="label">Username</label>
+            <div class="control has-icons-left has-icons-right">
+                {{form.username}}
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+            </div>
+        </div>
+        <div class="field">
+            <label for="" class="label">Password</label>
+            <div class="control has-icons-left has-icons-right">
+                {{form.password}}
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+                <label class="checkbox">
+                <input style="margin-top:10px;" class="" type="checkbox" onclick="myFunction()">Show Password
+                </label>
+            </div>
+        </div>
+            <input type="submit" class="button is-info mt-4" value="Login">
+            {% if form.non_field_errors %}
        {% for error in form.non_field_errors %}
         <p class="alert alert-danger my-3">{{ error}}</p>
        {% endfor %}
     {% endif %}
-   </form>
+            </form>
+    </div>
+    <div class="column is-4"></div>
 </div>
-    </div></div>
+
 
 {% endblock content %}

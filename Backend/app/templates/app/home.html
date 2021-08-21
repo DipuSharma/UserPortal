@@ -1,23 +1,11 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3  pt-5">
-            <div>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                   <li class="nav-item mx-2">
-                        <a href="{% url 'login' %}" class="btn btn-success nav-link" style="color:black">Login</a>
-                   </li>
-                   <li class="nav-item mx-2" style="margin-top:5px;">
-                        <a href="{% url 'register' %}" class="btn btn-primary nav-link" style="color:black">Registration</a>
-                   </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-9 pt-5">
-            <table class="table">
-                <thead style="background-color:Orange">
+ <div class="columns is-mobile">
+     <div class="column is-full is-one-third-widescreen is-one-quarter-fullhd">
+         <div class="table-container">
+          <table class="table is-hoverable">
+                <thead>
                     <tr>
                       <th scope="col">ID</th>
                       <th scope="col">User</th>
@@ -34,54 +22,49 @@
                   {% for d in data %}
                             <tr>
                               <th scope="row">{{d.id}}</th>
-                              <th scope="row">{{d.user}}</th>
-                              <td>{{d.sample_rec}}</td>
-                              <td>{{d.seq_last}}</td>
-                              <td>{{d.sample_pen}}</td>
+                              <td>{{d.user}}</td>
+                              <td>{{d.Sample_received}}</td>
+                              <td>{{d.Sequence_last}}</td>
+                              <td>{{d.Sample_pending}}</td>
                               <td>{{d.sample_rejected}}</td>
-                              <td>{{d.reason}}</td>
-                              <td>{{d.remark}}</td>
-                              <td>{{d.time}}</td>
+                              <td>{{d.Reason}}</td>
+                              <td>{{d.Remark}}</td>
+                              <td>{{d.Time}}</td>
                             </tr>
                   {% endfor %}
                 </tbody>
             </table>
-        </div>
-    </div>
+          </div>
+     </div>
+ </div>
 </div>
-
-<div class="container">
-    <div class="col-md-12 pt-5">
-            <table class="table">
-                <thead style="background-color:Orange">
-                    <tr>
-                      <th scope="col">ID</th>
-                      <th scope="col">User</th>
-                      <th scope="col">Sample Received</th>
-                      <th scope="col">Seq. Last Week</th>
-                      <th scope="col">Sample Pending</th>
-                      <th scope="col">Sample Rejected</th>
-                      <th scope="col">Reason</th>
-                      <th scope="col">Remark</th>
-                      <th scope="col">Time</th>
-                    </tr>
-              </thead>
-              <tbody>
-                  {% for n in newdata %}
-                            <tr>
-                              <th scope="row">{{n.latest_date}}</th>
-                              <th scope="row">{{n.user}}</th>
-                              <td>{{n.sample_rec}}</td>
-                              <td>{{n.seq_last}}</td>
-                              <td>{{n.sample_pen}}</td>
-                              <td>{{n.sample_rejected}}</td>
-                              <td>{{n.reason}}</td>
-                              <td>{{n.remark}}</td>
-                              <td>{{n.time}}</td>
-                            </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
-        </div>
+<div class="container is-fluid">
+    <div class="columns">
+  <div class="column">
+    <p class="bd-notification is-info">First column</p>
+    <div class="columns is-mobile">
+      <div class="column">
+        <p class="bd-notification is-info">First nested column</p>
+      </div>
+      <div class="column">
+        <p class="bd-notification is-info">Second nested column</p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <p class="bd-notification is-danger">Second column</p>
+    <div class="columns is-mobile">
+      <div class="column is-half">
+        <p class="bd-notification is-danger">50%</p>
+      </div>
+      <div class="column">
+        <p class="bd-notification is-danger">Auto</p>
+      </div>
+      <div class="column">
+        <p class="bd-notification is-danger">Auto</p>
+      </div>
+    </div>
+    </div>
+    </div>
 </div>
 {% endblock content %}
