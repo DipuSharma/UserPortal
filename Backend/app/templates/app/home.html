@@ -17,10 +17,7 @@
                     </tr>
               </thead>
               <tbody>
-              {% for u in userdata %}
                     {% for d in data %}
-                      <p>{{ forloop.counter }}</p>
-                         {% if d.instance.user == u.instance.username  %}
                              <tr style="font-size:15px;">
                                  <td>{{d.user}}</td>
                                   <td>{{d.Sample_received}}</td>
@@ -31,21 +28,7 @@
                                   <td>{{d.Remark}}</td>
                                   <td>{{d.Time}}</td>
                              </tr>
-                         {% else %}
-                             <tr style="font-size:15px;">
-                                 <td>{{u.username}}</td>
-                                  <td>Null</td>
-                                  <td>Null</td>
-                                  <td>Null</td>
-                                  <td>NUll</td>
-                                  <td>Null</td>
-                                  <td>Null</td>
-                                  <td>NUll</td>
-                             </tr>
-                         {% endif %}
                     {% endfor %}
-                    {% empty %}
-              {% endfor %}
               </tbody>
     </table>
 </div>
