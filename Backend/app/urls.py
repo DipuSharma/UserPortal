@@ -17,5 +17,4 @@ urlpatterns = [
     path('<int:id>', views.update_data, name="update"),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
 
-
 ]

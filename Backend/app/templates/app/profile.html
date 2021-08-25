@@ -7,11 +7,43 @@
         <center><h1 class="title is-2 is-center">Upload Data</h1></center>
            <form action="" method="post" novalidate class="shadow p-5 box-shadow-y">
                  {% csrf_token %}
-            {% for fm in form %}
-                <div class="form-group col-md-12 mb-3">{{ fm.label_tag }} {{fm}}
-                    <small class="text-danger">{{fm.errors|striptags}}</small><br>
-                </div>
-            {% endfor %}
+                   <div class="field">
+					<label for="" class="label">Sample_received</label>
+					<div class="control">
+						{{form.Sample_received}}
+					</div>
+				   </div>
+                   <div class="field">
+					<label for="" class="label">Sequence_last</label>
+					<div class="control">
+						{{form.Sequence_last}}
+					</div>
+				   </div>
+                   <div class="field">
+					<label for=""  jAutoCalc="{sample_received} - {sequence}- {sampleid}" class="label">Sample_pending</label>
+					<div class="control">
+						{{form.Sample_pending}}
+					</div>
+				   </div>
+                   <div class="field">
+					<label for="" class="label">Sample_rejected</label>
+					<div class="control">
+						{{form.Sample_rejected}}
+					</div>
+				   </div>
+                   <div class="field">
+					<label for="" class="label">Reason</label>
+					<div class="control">
+						{{form.Reason}}
+					</div>
+				   </div>
+                   <div class="field">
+					<label for="" class="label">Remarks</label>
+					<div class="control">
+						{{form.Remark}}
+					</div>
+				   </div>
+
                <div class="col-2 mt-3">
                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
                </div>
@@ -28,10 +60,10 @@
          <table class="table is-hoverable ">
            <thead class="box-shadow-y">
               <tr>
-                  <th scope="col">ID</th>
+                  <th scope="col">Date And Time</th>
                   <th scope="col">Sample Received</th>
                   <th scope="col">Seq. Last Week</th>
-                  <th scope="col">Sample Pending</th>
+                  <th scope="col" >Sample Pending</th>
                   <th scope="col">Sample Rejected</th>
                   <th scope="col">Reason</th>
                   <th scope="col">Remark</th>
@@ -42,14 +74,14 @@
            <tbody>
          {% for d in data %}
                 <tr>
-                  <th scope="row">{{d.id}}</th>
+                  <th scope="row" style="font-size:10px;">{{d.Time}}</th>
                   <td>{{d.Sample_received}}</td>
                   <td>{{d.Sequence_last}}</td>
-                  <td>{{d.Sample_pending}}</td>
+                  <td id="sampleid">{{d.Sample_pending}}</td>
                   <td>{{d.sample_rejected}}</td>
                   <td>{{d.Reason}}</td>
                   <td>{{d.Remark}}</td>
-                  <td><a class="button is-warning is-outlined" href="{% url 'update' d.id %}">Edit</a></td>
+                  <td><a class="button is-warning is-outlined model-button" data-target = "#modal" href="{% url 'update' d.id %}">Edit</a></td>
                   <td><a class="button is-danger is-outlined" href="{% url 'deleted' d.id %}">Delete</a></td>
                 </tr>
          {% endfor %}

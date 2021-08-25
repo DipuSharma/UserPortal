@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'app/css/my.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
           crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script language="javascript" src="{% static 'app/js/my.js' %}"></script>
 </head>
 <body>
@@ -37,8 +37,10 @@
                       <strong>{{user}}</strong>
                     </a>
                     <div class="navbar-dropdown">
+                        <a class="navbar-item" href="{% url 'profile' %}">Profile</a>
                         <a class="navbar-item" href="{% url 'logout' %}">Logout</a>
                     </div>
+
                       {% else %}
                     <a class="navbar-item is-primary" href="{% url 'register' %}">
                       <strong>Sign Up</strong>
@@ -75,6 +77,16 @@ function myFunction() {
     x.type = "password";
   }
 }
+</script>
+<script>
+    $(document).ready(function(){
+    $(".input").keyup(function(){
+          var val1 = +$("#sample_received").val();
+          var val2 = +$("#sequence").val();
+          var val3 = +$("#sampleid").val();
+          $("#pending").val(val1 - val2);
+    });
+});
 </script>
 </body>
 </html>

@@ -1,13 +1,11 @@
 {% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
- <div class="columns is-mobile">
-     <div class="column is-full is-one-third-widescreen is-one-quarter-fullhd">
-         <div class="table-container">
-          <table class="table is-hoverable">
+
+<div class="table-container is-fluid">
+    <table class="table is-hoverable">
                 <thead>
                     <tr>
-                      <th scope="col">ID</th>
                       <th scope="col">User</th>
                       <th scope="col">Sample Received</th>
                       <th scope="col">Seq. Last Week</th>
@@ -19,52 +17,38 @@
                     </tr>
               </thead>
               <tbody>
-                  {% for d in data %}
-                            <tr>
-                              <th scope="row">{{d.id}}</th>
-                              <td>{{d.user}}</td>
-                              <td>{{d.Sample_received}}</td>
-                              <td>{{d.Sequence_last}}</td>
-                              <td>{{d.Sample_pending}}</td>
-                              <td>{{d.sample_rejected}}</td>
-                              <td>{{d.Reason}}</td>
-                              <td>{{d.Remark}}</td>
-                              <td>{{d.Time}}</td>
-                            </tr>
-                  {% endfor %}
-                </tbody>
-            </table>
-          </div>
-     </div>
- </div>
+              {% for u in userdata %}
+                    {% for d in data %}
+                      <p>{{ forloop.counter }}</p>
+                         {% if d.instance.user == u.instance.username  %}
+                             <tr style="font-size:15px;">
+                                 <td>{{d.user}}</td>
+                                  <td>{{d.Sample_received}}</td>
+                                  <td>{{d.Sequence_last}}</td>
+                                  <td>{{d.Sample_pending}}</td>
+                                  <td>{{d.sample_rejected}}</td>
+                                  <td>{{d.Reason}}</td>
+                                  <td>{{d.Remark}}</td>
+                                  <td>{{d.Time}}</td>
+                             </tr>
+                         {% else %}
+                             <tr style="font-size:15px;">
+                                 <td>{{u.username}}</td>
+                                  <td>Null</td>
+                                  <td>Null</td>
+                                  <td>Null</td>
+                                  <td>NUll</td>
+                                  <td>Null</td>
+                                  <td>Null</td>
+                                  <td>NUll</td>
+                             </tr>
+                         {% endif %}
+                    {% endfor %}
+                    {% empty %}
+              {% endfor %}
+              </tbody>
+    </table>
 </div>
-<div class="container is-fluid">
-    <div class="columns">
-  <div class="column">
-    <p class="bd-notification is-info">First column</p>
-    <div class="columns is-mobile">
-      <div class="column">
-        <p class="bd-notification is-info">First nested column</p>
-      </div>
-      <div class="column">
-        <p class="bd-notification is-info">Second nested column</p>
-      </div>
-    </div>
-  </div>
-  <div class="column">
-    <p class="bd-notification is-danger">Second column</p>
-    <div class="columns is-mobile">
-      <div class="column is-half">
-        <p class="bd-notification is-danger">50%</p>
-      </div>
-      <div class="column">
-        <p class="bd-notification is-danger">Auto</p>
-      </div>
-      <div class="column">
-        <p class="bd-notification is-danger">Auto</p>
-      </div>
-    </div>
-    </div>
-    </div>
-</div>
+
+
 {% endblock content %}

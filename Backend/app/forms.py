@@ -35,9 +35,11 @@ class UserDataInsert(forms.ModelForm):
         model = Data
         fields = ['Sample_received', 'Sequence_last', 'Sample_pending', 'Sample_rejected', 'Reason', 'Remark']
         widgets = {
-            'Sample_received': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sample Received'}),
-            'Sequence_last': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sequence Last Week'}),
-            'Sample_pending': forms.TextInput(attrs={'class': 'input'}),
+            'Sample_received': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sample Received',
+                                                      'id': 'sample_received'}),
+            'Sequence_last': forms.TextInput(attrs={'class': 'input', 'placeholder': 'Enter Sequence Last Week',
+                                                    'id': 'sequence'}),
+            'Sample_pending': forms.TextInput(attrs={'class': 'input', 'readonly': 'readonly', 'id': 'pending'}),
             'Sample_rejected': forms.TextInput(attrs={'class': 'input'}),
             'Reason': forms.TextInput(attrs={'class': 'input'}),
             'Remark': forms.TextInput(attrs={'class': 'input'}),

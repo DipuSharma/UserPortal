@@ -4,6 +4,9 @@
 <div class="columns is-mobile is-variable is-3">
     <div class="column is-4"></div>
     <div class="column is-4 box-shadow-y">
+        {% for msg in messages%}
+           <p class="alert is-success has-center">{{msg}}</p>
+        {% endfor %}
         <center><h1 class="title is-2 is-center ">Login</h1></center>
         <form action="" method="post" novalidate class="shadow p-5 " >
             {% csrf_token %}
