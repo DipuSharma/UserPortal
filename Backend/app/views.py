@@ -20,7 +20,7 @@ class HomeView(TemplateView):
                                 .annotate(Max('Time')).values_list('Time__max'))
         p = User.objects.all()
 
-        return render(request, 'app/home.html', {'data': q, 'userdata': p})
+        return render(request, 'app/home.html', {'data': q})
 
 
 @login_required()
