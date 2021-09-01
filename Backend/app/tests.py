@@ -1,10 +1,13 @@
-from django.test import TestCase
+list1 = [10, 20, 4, 45, 99]
 
-# Create your tests here.
-x = [1, 2, 3, 4, 5, 6, 7]
-y = [6,4]
+mx = max(list1[0], list1[1])
+secondmax = min(list1[0], list1[1])
+n = len(list1)
+for i in range(2, n):
+    if list1[i] < mx:
+        secondmax = mx
+        mx = list1[i]
+    elif secondmax > list1[i] != mx:
+        secondmax = list1[i]
 
-for i in y:
-    for j in x:
-        if i == j:
-            print(j)
+print("Second highest number is : ", str(secondmax))

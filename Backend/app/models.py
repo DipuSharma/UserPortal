@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-@property
-def total_user(self):
-    return self.username, self.Data.user
 
 class Data(models.Model):
     user = models.ForeignKey(User, verbose_name="username", on_delete=models.CASCADE, null=True, blank=True)

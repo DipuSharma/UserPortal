@@ -26,7 +26,7 @@ class LoginForm(AuthenticationForm):
     username = UsernameField(widget=forms.TextInput(attrs={'autofocus': True, 'class': 'input',
                                                            'placeholder': 'Enter UserName'}))
     password = forms.CharField(label=_("Password"), strip=False, widget=forms.PasswordInput(
-        attrs={'autocomplete': 'current-password', 'class': 'input', 'id': 'myInput',
+        attrs={'autocomplete': 'current-password', 'class': 'input','type': 'password', 'id': 'myInput',
                'placeholder': 'Enter Your Password'}))
 
 

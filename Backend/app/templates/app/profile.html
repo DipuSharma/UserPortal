@@ -2,92 +2,108 @@
 {% load static %}
 {% block title %}Profile{% endblock title %}
 {% block content %}
- <div class="columns">
-     <div class="column is-4">
-        <center><h1 class="title is-2 is-center">Upload Data</h1></center>
-           <form action="" method="post" novalidate class="shadow p-5 box-shadow-y">
-                 {% csrf_token %}
-                   <div class="field">
-					<label for="" class="label">Sample_received</label>
-					<div class="control">
-						{{form.Sample_received}}
-					</div>
-				   </div>
-                   <div class="field">
-					<label for="" class="label">Sequence_last</label>
-					<div class="control">
-						{{form.Sequence_last}}
-					</div>
-				   </div>
-                   <div class="field">
-					<label for=""  jAutoCalc="{sample_received} - {sequence}- {sampleid}" class="label">Sample_pending</label>
-					<div class="control">
-						{{form.Sample_pending}}
-					</div>
-				   </div>
-                   <div class="field">
-					<label for="" class="label">Sample_rejected</label>
-					<div class="control">
-						{{form.Sample_rejected}}
-					</div>
-				   </div>
-                   <div class="field">
-					<label for="" class="label">Reason</label>
-					<div class="control">
-						{{form.Reason}}
-					</div>
-				   </div>
-                   <div class="field">
-					<label for="" class="label">Remarks</label>
-					<div class="control">
-						{{form.Remark}}
-					</div>
-				   </div>
-
-               <div class="col-2 mt-3">
-                   <button type="submit" class="btn btn-primary mb-3">Submit</button>
-               </div>
-           </form>
+<div class="columns">
+  <div class="column is-3"></div>
+  <div class="column is-6 is-float-right" style="margin-left:10px;">
+    <h3 id="totSampRec" class="button is-info">Total Sample Recieved </h3>
+    <h3 id="totSequence" class="button is-primary">Total Sequence </h3>
+    <h3 id="totPending" class="button is-danger">Total Sample Pending </h3>
   </div>
+  <div class="column is-3">
+    <button type="button" class="button  is-primary start" onclick="myStopRow()">Stop Row</button>
+    <button type="button" class="button is-danger stop" onclick="myStopSubmit()">Stop Submit</button>
+  </div>
+</div>
+<div class="columns">
+  <div class="column is-4">
+    <center>
+      <h1 class="title is-2 is-center">Upload Data</h1>
+    </center>
+    <form action="" method="post" novalidate class="shadow p-5 box-shadow-y">
+      {% csrf_token %}
+      <div class="field">
+        <label for="" class="label">Sample_received</label>
+        <div class="control">
+          {{form.Sample_received}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="" class="label">Sequence_last</label>
+        <div class="control">
+          {{form.Sequence_last}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="" jAutoCalc="{sample_received} - {sequence}- {sampleid}" class="label">Sample_pending</label>
+        <div class="control">
+          {{form.Sample_pending}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="" class="label">Sample_rejected</label>
+        <div class="control">
+          {{form.Sample_rejected}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="" class="label">Reason</label>
+        <div class="control">
+          {{form.Reason}}
+        </div>
+      </div>
+      <div class="field">
+        <label for="" class="label">Remarks</label>
+        <div class="control">
+          {{form.Remark}}
+        </div>
+      </div>
 
-     <div class="column is-8">
-         {% if messages %}
-           {% for message in messages %}
-            <p {% if message.tags %} class="{{ message.tags }} mb-3" {% endif %}>{{ message }}</p>
-           {% endfor %}
-         {% endif %}
-         <center><h1 class="title is-2 is-center">Data Show</h1></center>
-         <table class="table is-hoverable ">
-           <thead class="box-shadow-y">
-              <tr>
-                  <th scope="col">Date And Time</th>
-                  <th scope="col">Sample Received</th>
-                  <th scope="col">Seq. Last Week</th>
-                  <th scope="col" >Sample Pending</th>
-                  <th scope="col">Sample Rejected</th>
-                  <th scope="col">Reason</th>
-                  <th scope="col">Remark</th>
-                  <th scope="col"></th>
-                  <th scope="col">Action</th>
-              </tr>
-           </thead>
-           <tbody>
-         {% for d in data %}
-                <tr>
-                  <th scope="row" style="font-size:10px;">{{d.Time}}</th>
-                  <td>{{d.Sample_received}}</td>
-                  <td>{{d.Sequence_last}}</td>
-                  <td id="sampleid">{{d.Sample_pending}}</td>
-                  <td>{{d.sample_rejected}}</td>
-                  <td>{{d.Reason}}</td>
-                  <td>{{d.Remark}}</td>
-                  <td><a class="button is-warning is-outlined model-button" data-target = "#modal" href="{% url 'update' d.id %}">Edit</a></td>
-                  <td><a class="button is-danger is-outlined" href="{% url 'deleted' d.id %}">Delete</a></td>
-                </tr>
-         {% endfor %}
-           </tbody>
-         </table>
-     </div>
- </div>
+      <div class="col-2 mt-3">
+        <button type="submit" id="Submit" class="button is-success mb-3" onclick="myFunction()">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="column is-8 table-container is-fluid">
+    {% if messages %}
+    {% for message in messages %}
+    <p {% if message.tags %} class="{{ message.tags }} mb-3" {% endif %}>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    <center>
+      <h1 class="title is-2 is-center">Data Show</h1>
+    </center>
+    <table class="table is-hoverable" id="tables">
+      <thead class="box-shadow-y">
+        <tr>
+          <th scope="col">Date And Time</th>
+          <th scope="col">Sample Received</th>
+          <th scope="col">Seq. Last Week</th>
+          <th scope="col">Sample Pending</th>
+          <th scope="col">Sample Rejected</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Remark</th>
+          <th scope="col"></th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in data %}
+        <tr>
+          <th scope="row" style="font-size:10px;">{{d.Time}}</th>
+          <td id="secret">{{d.Sample_received}}</td>
+          <td id="seq">{{d.Sequence_last}}</td>
+          <td id="sampleid">{{d.Sample_pending}}</td>
+          <td id="samrej">{{d.Sample_rejected}}</td>
+          <td>{{d.Reason}}</td>
+          <td>{{d.Remark}}</td>
+          <td><a class="button is-warning is-outlined" type="button" id="edit{{forloop.revcounter}}"
+              href="{% url 'update' d.id %}" onclick="myEdit()">Edit</a></td>
+          <td><a class="button is-danger is-outlined" href="{% url 'deleted' d.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 
 {% endblock content %}
