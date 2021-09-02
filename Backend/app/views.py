@@ -106,26 +106,44 @@ def update_data(request, id):
         if request.user.is_authenticated:
             pi = Data.objects.get(pk=id)
             o = pi.id
-            l = Data.objects.filter(Q(id__lt=o) & Q(user=request.user)).values('Sample_pending').order_by('-id')
-            
-            if l.exists():
+            dataset = Data.objects.filter(Q(user=request.user))
+            # print("Data Set",dataset)
+            id_list = [i.id for i in dataset  if i.id >= o]
+            # print("ID List ",id_list)
+            #######################  Find Last Recent data for single entry by form submit  #################################
+            last_recent = Data.objects.filter(Q(id__lt=o) & Q(user=request.user)).order_by('-id')
+            ########  if last recent data exists ##########
+            if last_recent.exists():
                 form = UserDataInsert(request.POST, instance=pi)
-                for i in l:
-                    s = i['Sample_pending']
-                    m = Data.objects.filter(Q(id__gt=o) & Q(user=request.user))
-                    if form.is_valid():
-                        pi.Sample_received = form.cleaned_data['Sample_received']
-                        pi.Sequence_last = form.cleaned_data['Sequence_last']
-                        pi.Sample_pending = s + pi.Sample_received - pi.Sequence_last
-                        pi.save()
-                        messages.success(request, 'Data Updated Successfully')
-                        return HttpResponseRedirect('/accounts/profile/')
+                if form.is_valid():
+                    m = Data.objects.filter(Q(id__lt=o) & Q(user=request.user)).order_by('-id')
+                    recent_pending = (m[0].Sample_pending)
+                    pi.Sample_received = form.cleaned_data['Sample_received']
+                    pi.Sequence_last = form.cleaned_data['Sequence_last']
+                    pi.Sample_pending = recent_pending + pi.Sample_received - pi.Sequence_last
+                    for i in id_list:
+                        from_database = Data.objects.filter(Q(id=i))
+                        upper_panding = from_database.only('Sample_pending')
+                        # print(upper_panding[0].Sample_pending)
+                        # print(pi.Sample_pending)
+                        pending = pi.Sample_pending + upper_panding[0].Sample_received - upper_panding[0].Sequence_last
+                        from_database.update(Sample_pending = pending)
+                    pi.save()        
+                return HttpResponseRedirect('/accounts/profile/')
             else:
                 form = UserDataInsert(request.POST, instance=pi)
                 if form.is_valid():
                     pi.Sample_received = form.cleaned_data['Sample_received']
                     pi.Sequence_last = form.cleaned_data['Sequence_last']
                     pi.Sample_pending = 0 + pi.Sample_received - pi.Sequence_last
+                    for i in id_list:
+                        # m = Data.objects.filter(Q(id__lt=i) & Q(user=request.user)).order_by('id')
+                        # recent_pending = (m[0].Sample_pending)
+                        # print(recent_pending)
+                        from_database = Data.objects.filter(Q(id=i))
+                        upper_panding = from_database.only('Sample_pending')
+                        pending = pi.Sample_pending + upper_panding[0].Sample_received - upper_panding[0].Sequence_last
+                        from_database.update(Sample_pending = pending)
                     pi.save()
                     messages.success(request, 'Data Updated Successfully')
                     return HttpResponseRedirect('/accounts/profile/')
