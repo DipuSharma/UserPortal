@@ -1,0 +1,118 @@
+ m = Data.objects.filter(Q(id__gt=o) & Q(user=request.user)).only('id')
+                    for b in m:
+                        print(b.id)
+                    lower = int(o)
+                    # print(upper, lower)    
+                    for k in range(lower):
+                        print("dipu", k)
+
+View Update code
+
+           if l.exists():
+                form = UserDataInsert(request.POST, instance=pi)
+                for i in l:
+                    s = i['Sample_pending']
+                    if form.is_valid():
+                        pi.Sample_received = form.cleaned_data['Sample_received']
+                        pi.Sequence_last = form.cleaned_data['Sequence_last']
+                        pi.Sample_pending = s + pi.Sample_received - pi.Sequence_last
+                        pi.save()
+                        messages.success(request, 'Data Updated Successfully')
+                        return HttpResponseRedirect('/accounts/profile/')
+            else:
+                form = UserDataInsert(request.POST, instance=pi)
+                if form.is_valid():
+                    pi.Sample_received = form.cleaned_data['Sample_received']
+                    pi.Sequence_last = form.cleaned_data['Sequence_last']
+                    pi.Sample_pending = 0 + pi.Sample_received - pi.Sequence_last
+                    pi.save()
+                    messages.success(request, 'Data Updated Successfully')
+                    return HttpResponseRedirect('/accounts/profile/')
+
+                # for int value id 
+                # for b in m:     
+                #         upper = int(b.id)
+                #         lower = int(o)
+                #     # print(upper, lower)    
+
+                #     for k in range(lower, upper):
+                #         print("dipu", k)
+
+
+////////////////JavaScript code//////////////////////////////
+
+  var table = document.getElementById("tables");
+
+  for (var i = 0, row; row = table.rows[i]; i++) {
+    var click = document.getElementById("i")
+    console.log(click)
+    setInterval(function () { 
+      button.click()
+    }, 1000)
+    //iterate through rows
+    //rows would be accessed using the "row" variable assigned in the for loop
+
+  }
+
+  var submit = document.getElementById("Submit");
+  setInterval(function() {
+    button.click()   
+  }, 1000)
+
+############# Update code ##################33
+def update_data(request, id):
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            pi = Data.objects.get(pk=id)
+            o = pi.id
+            l = Data.objects.filter(Q(id__lt=o) & Q(user=request.user)).values('Sample_pending').order_by('-id')
+            
+            if l.exists():
+                form = UserDataInsert(request.POST, instance=pi)
+                for i in l:
+                    s = i['Sample_pending']
+                    m = Data.objects.filter(Q(id__gt=o) & Q(user=request.user))
+                    if form.is_valid():
+                        pi.Sample_received = form.cleaned_data['Sample_received']
+                        pi.Sequence_last = form.cleaned_data['Sequence_last']
+                        pi.Sample_pending = s + pi.Sample_received - pi.Sequence_last
+                        pi.save()
+                        messages.success(request, 'Data Updated Successfully')
+                        return HttpResponseRedirect('/accounts/profile/')
+            else:
+                form = UserDataInsert(request.POST, instance=pi)
+                if form.is_valid():
+                    pi.Sample_received = form.cleaned_data['Sample_received']
+                    pi.Sequence_last = form.cleaned_data['Sequence_last']
+                    pi.Sample_pending = 0 + pi.Sample_received - pi.Sequence_last
+                    pi.save()
+                    messages.success(request, 'Data Updated Successfully')
+                    return HttpResponseRedirect('/accounts/profile/')
+                    
+    else:
+        pi = Data.objects.get(pk=id)
+        fm = UserDataInsert(instance=pi)
+        return render(request, 'app/profile.html', {'form': fm})
+    
+    animesh.workplace@gmail.com
+
+
+   
+  <script>
+    function myFunction() {	
+      document.getElementById("Submit").value = "Clicked";
+      
+    }
+    setInterval(function(){
+    document.getElementById("Submit").click();	
+    }, 4000);
+    </script>
+
+
+
+
+     setInterval(function () {
+      for (var x = 1; x < 15; x++) {
+        document.getElementById("edit" + x).click();
+      };
+    },10000);
