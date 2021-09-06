@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Data(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, verbose_name="username", on_delete=models.CASCADE, null=True, blank=True)
     Sample_received = models.IntegerField()
     Sequence_last = models.IntegerField()
@@ -15,8 +16,4 @@ class Data(models.Model):
     def __str__(self):
         return str(self.user)
 
-    @property
-    def total_pending(self):
-        for d in Data:
-            print(d.Sample_pending)
-        return self.username, self.Data.user
+    
