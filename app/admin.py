@@ -11,4 +11,4 @@ from .models import (
 @admin.register(Data)
 class CustomerModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'Sample_received', 'Sequence_last', 'Sample_pending',
-                    'Sample_rejected', 'Reason', 'Remark', 'Time']
+                    'Sample_rejected', 'Reason', 'Remark', 'created_at', 'updated_at']

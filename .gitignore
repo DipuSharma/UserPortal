@@ -2,10 +2,9 @@
 *.log
 *.pot
 *.pyc
-__pycache__
-db.sqlite3
-media
-
+__pycache__/
+db.sqlite3*
+media/
 # Backup files # 
 *.bak 
 
@@ -33,6 +32,7 @@ media
 develop-eggs/ 
 dist/ 
 downloads/ 
+*migrations/
 eggs/ 
 .eggs/ 
 lib/ 

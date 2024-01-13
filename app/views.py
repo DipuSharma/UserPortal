@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, View
 from django.views.generic.base import TemplateView
-from django.db.models import Max, Q
+from django.db.models import Max, Q, Sum, Avg, Min, Count
+from django.core.paginator import Paginator
 
 
 class DataView(ListView):
@@ -16,8 +17,8 @@ class DataView(ListView):
 
 class HomeView(TemplateView):
     def get(self, request):
-        q = Data.objects.filter(Time__in=Data.objects.values('user')
-                                .annotate(Max('Time')).values_list('Time__max'))
+        q = Data.objects.filter(created_at__in=Data.objects.values('user')
+                                .annotate(Max('created_at')).values_list('created_at__max'))
         # print(dir(q))
                              
 
@@ -26,46 +27,59 @@ class HomeView(TemplateView):
 ###  This Function create for Insert Data And Show data on Single Page
 @login_required()
 def add_show(request):
+    current_user = request.user
+    existing_sequence_data = Data.objects.filter(user=current_user).order_by('-id')
+    total_sample = Data.objects.filter(user=current_user).aggregate(Sum("Sample_received", default=0))
+    total_pending = Data.objects.filter(user=current_user).aggregate(Sum("Sample_pending", default=0))
+    total_sequence = Data.objects.filter(user=current_user).aggregate(Sum("Sequence_last", default=0))
+    p = Paginator(existing_sequence_data, 10) # for 1 object per page
+    try:
+        page_number = request.GET.get('page')
+        page_object = p.page(page_number)
+    except:
+        page_object = p.page(1)   # load first page by default
+    total_count_data = {
+        "total_sample": total_sample.get('Sample_received__sum'),
+        "total_pending": total_pending.get('Sample_pending__sum'),
+        "total_sequence": total_sequence.get('Sequence_last__sum')
+    }
+
     if request.method == 'POST':
         form = UserDataInsert(request.POST)
         if form.is_valid():
-            usr = request.user
-            d = Data.objects.filter(user=request.user).order_by('-id')
-            if d.exists():
+            if existing_sequence_data.exists():
                 p = Data.objects.filter(user=request.user).order_by('-id')
                 l = p[0].Sample_pending
                 Sample_received = form.cleaned_data['Sample_received']
                 Sequence_last = form.cleaned_data['Sequence_last']
-                Sample_pending = l + Sample_received - Sequence_last
                 Sample_rejected = form.cleaned_data['Sample_rejected']
+                Sample_pending = l + Sample_received - Sequence_last - Sample_rejected
                 Reason = form.cleaned_data['Reason']
                 Remark = form.cleaned_data['Remark']
-                reg = Data(user=usr, Sample_received=Sample_received, Sequence_last=Sequence_last,
+                reg = Data(user=current_user, Sample_received=Sample_received, Sequence_last=Sequence_last,
                             Sample_pending=Sample_pending, Sample_rejected=Sample_rejected,
                             Reason=Reason, Remark=Remark)
                 reg.save()
                 form = UserDataInsert()
-                messages.success(request, 'Data Saved Successfully!!!!')
-                return HttpResponseRedirect('/accounts/profile/')
+                return HttpResponseRedirect('/accounts/profile/', {'message':'Data Saved Successfully!!!!'})
             else:
                 Sample_received = form.cleaned_data['Sample_received']
                 Sequence_last = form.cleaned_data['Sequence_last']
-                Sample_pending = Sample_received - Sequence_last
                 Sample_rejected = form.cleaned_data['Sample_rejected']
+                Sample_pending = ((Sample_received - Sequence_last) - Sample_rejected)
                 Reason = form.cleaned_data['Reason']
                 Remark = form.cleaned_data['Remark']
-                reg = Data(user=usr, Sample_received=Sample_received, Sequence_last=Sequence_last,
+                new_record = Data(user=current_user, Sample_received=Sample_received, Sequence_last=Sequence_last,
                            Sample_pending=Sample_pending, Sample_rejected=Sample_rejected,
                            Reason=Reason, Remark=Remark)
-                reg.save()
+                new_record.save()
                 form = UserDataInsert()
-                messages.success(request, 'Data Saved Successfully!!!!')
-                return HttpResponseRedirect('/accounts/profile/')
-
+                return HttpResponseRedirect('/accounts/profile/', {"message": "Sequence record save successfully"})
     else:
         form = UserDataInsert()
-    data = Data.objects.filter(user=request.user).order_by('-id')
-    return render(request, 'app/profile.html', {'form': form, 'data': data})
+    # data = Data.objects.filter(user=request.user).order_by('-id')
+        # normal dict without pagination 'data': existing_sequence_data,
+    return render(request, 'app/profile.html', {'form': form, 'sum_data': total_count_data, 'page_object':page_object}, )
 
 
 # Registration

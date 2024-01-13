@@ -5,9 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,  initial-scale= 1">
-  <title>Task 1</title>
+  <title>User Portal App</title>
   <base href="/">
-  <link rel="stylesheet" type="text/css" href="{% static 'app/css/bulma.min.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" type="text/css" href="{% static 'app/css/my.css' %}">
   <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous"
@@ -106,34 +106,11 @@
       $(".input").keyup(function () {
         var val1 = +$("#sample_received").val();
         var val2 = +$("#sequence").val();
-        var val3 = +$("#sampleid").val();
-        $("#pending").val(val1 - val2);
+        var val3 = +$("#id_Sample_rejected").val();
+        $("#pending").val(val1 - val2 - val3);
       });
     });
   </script>
-  <!-- <script> ///////// Auto Click Code //////////
-    var row = setInterval(function () {
-      for (var x = 1; x < 15; x++) {
-        document.getElementById("edit" + x).click();
-      };
-    }, 3000);
-    function myStopRow() {
-      clearInterval(row);
-    }
-  </script>
-
-  <script>
-    /////// Submit Button Code ////////
-    function myFunction() {
-      document.getElementById("Submit").value = "Clicked";
-    }
-    var id = setInterval(function () {
-      document.getElementById("Submit").click();
-    }, 4000);
-    function myStopSubmit() {
-      clearInterval(id);
-    }
-  </script> -->
 </body>
 
 </html>

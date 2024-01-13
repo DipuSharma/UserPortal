@@ -4,15 +4,13 @@
 {% block content %}
 <div class="columns">
   <div class="column is-3"></div>
+  {% if sum_data %}
   <div class="column is-6 is-float-right" style="margin-left:10px;">
-    <h3 id="totSampRec" class="button is-info">Total Sample Recieved </h3>
-    <h3 id="totSequence" class="button is-primary">Total Sequence </h3>
-    <h3 id="totPending" class="button is-danger">Total Sample Pending </h3>
+    <h3 id="totSampRec" class="button is-info">Total Sample Recieved {{sum_data.total_sample}}</h3>
+    <h3 id="totSequence" class="button is-primary">Total Sequence {{sum_data.total_sequence}}</h3>
+    <h3 id="totPending" class="button is-danger">Total Sample Pending {{sum_data.total_pending}}</h3>
   </div>
-  <div class="column is-3">
-    <button type="button" class="button  is-primary start" onclick="myStopRow()">Stop Row</button>
-    <button type="button" class="button is-danger stop" onclick="myStopSubmit()">Stop Submit</button>
-  </div>
+  {% endif %}
 </div>
 <div class="columns">
   <div class="column is-4">
@@ -87,9 +85,9 @@
         </tr>
       </thead>
       <tbody>
-        {% for d in data %}
+        {% for d in page_object %}
         <tr>
-          <th scope="row" style="font-size:10px;">{{d.Time}}</th>
+          <th scope="row" style="font-size:10px;">{{d.created_at}}</th>
           <td id="secret">{{d.Sample_received}}</td>
           <td id="seq">{{d.Sequence_last}}</td>
           <td id="sampleid">{{d.Sample_pending}}</td>
